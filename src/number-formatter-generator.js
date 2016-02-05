@@ -9,7 +9,7 @@ var pow = Math.pow;
 var round = Math.round;
 var floor = Math.floor;
 
-module.exports = function (input) {
+function generator (input) {
 	// Do not format values if not given a mask
 	if (!input) {
 		return function format (input) { return input };
@@ -52,4 +52,6 @@ module.exports = function (input) {
 		var result = groups.join(groupSeparator) + decimalSeparator + fraction;
 		return prefix + (isNegative ? '-' : '') + result + suffix;
 	};
-};
+}
+
+module.exports = generator;
