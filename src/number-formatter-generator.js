@@ -1,6 +1,7 @@
 var EXP_MASK = /^.*?([0-9+\-.,' #]+).*?$/;
 
 var abs = Math.abs;
+var pow = Math.pow;
 
 module.exports = function (input) {
 	// Do not format values if not given a mask
@@ -17,6 +18,10 @@ module.exports = function (input) {
 	var mask = match[1];
 	var prefix = input.substring(0, match.index);
 	var suffix = input.substring(match.index + mask.length);
+	var groupSeparator = ',';
+	var decimalSeparator = '.';
+	var decimalPlaces = 2;
+	var decimalPlacesMultiplier = pow(10, decimalPlaces);
 	return function format (input) {
 		// Pass value through if not numeric
 		if (isNaN(input)) {
@@ -26,7 +31,9 @@ module.exports = function (input) {
 		input = Number(input);
 		var isNegative = input < 0;
 		var value = abs(input);
-		var result = String(value);
+		var decimal = Math.floor(value);
+		var fraction = Math.floor(value * decimalPlacesMultiplier) % decimalPlacesMultiplier;
+		var result = decimal + decimalSeparator + fraction;
 		return prefix + (isNegative ? '-' : '') + result + suffix;
 	};
 };
