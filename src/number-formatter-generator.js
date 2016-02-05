@@ -1,6 +1,9 @@
 var EXP_MASK = /^.*?([0-9+\-.,' #]+).*?$/;
 
 module.exports = function (input) {
+	if (!input) {
+		return function format (input) { return input };
+	}
 	input = String(input);
 	var match = input.match(EXP_MASK);
 	if (!match) {
