@@ -1,5 +1,7 @@
 var EXP_MASK = /^.*?([0-9+\-.,' #]+).*?$/;
 
+var abs = Math.abs;
+
 module.exports = function (input) {
 	// Do not format values if not given a mask
 	if (!input) {
@@ -20,5 +22,11 @@ module.exports = function (input) {
 		if (isNaN(input)) {
 			return input;
 		}
+		// Ensure input is number
+		input = Number(input);
+		var isNegative = input < 0;
+		var value = abs(input);
+		var result = String(value);
+		return prefix + (isNegative ? '-' : '') + result + suffix;
 	};
 };
