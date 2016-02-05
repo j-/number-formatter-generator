@@ -1,0 +1,33 @@
+{
+  "name": "number-formatter-generator",
+  "version": "0.0.0",
+  "description": "Generate a number formatter function",
+  "main": "src/number-formatter-generator.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-/number-formatter-generator.js.git"
+  },
+  "keywords": [
+    "number",
+    "formatter",
+    "format",
+    "generator",
+    "generate",
+    "mask"
+  ],
+  "author": "Jamie Hoeks <j@skeoh.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/j-/number-formatter-generator.js/issues"
+  },
+  "homepage": "https://github.com/j-/number-formatter-generator.js#readme",
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
