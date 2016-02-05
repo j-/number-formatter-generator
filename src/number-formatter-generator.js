@@ -9,6 +9,22 @@ var pow = Math.pow;
 var round = Math.round;
 var floor = Math.floor;
 
+function findGroupSeparator (mask) {
+	var result = mask.match(/[.,' ]/);
+	if (!result) {
+		return null;
+	}
+	return result[0];
+}
+
+function findDecimalSeparator (mask) {
+	var result = mask.split('').reverse().join('').match(/[.,' ]/);
+	if (!result) {
+		return null;
+	}
+	return result[0];
+}
+
 function generator (input) {
 	// Do not format values if not given a mask
 	if (!input) {
@@ -25,11 +41,11 @@ function generator (input) {
 	var prefix = input.substring(0, match.index);
 	var suffix = input.substring(match.index + mask.length);
 	// Group
-	var groupSeparator = DEFAULT_GROUP_SEPARATOR;
+	var groupSeparator = findGroupSeparator(mask) || DEFAULT_GROUP_SEPARATOR;
 	var groupSize = DEFAULT_GROUP_SIZE;
 	var groupSizeMultiplier = pow(10, groupSize);
 	// Decimal
-	var decimalSeparator = DEFAULT_DECIMAL_SEPARATOR;
+	var decimalSeparator = findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
 	var decimalPlaces = DEFAULT_DECIMAL_SIZE;
 	var decimalPlacesMultiplier = pow(10, decimalPlaces);
 	return function format (input) {
