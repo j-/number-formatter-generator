@@ -1,3 +1,7 @@
+var DEFAULT_GROUP_SEPARATOR = ',';
+var DEFAULT_DECIMAL_SEPARATOR = '.';
+var DEFAULT_GROUP_SIZE = 3;
+var DEFAULT_DECIMAL_SIZE = 0;
 var EXP_MASK = /^.*?([0-9+\-.,' #]+).*?$/;
 
 var abs = Math.abs;
@@ -20,11 +24,13 @@ module.exports = function (input) {
 	var mask = match[1];
 	var prefix = input.substring(0, match.index);
 	var suffix = input.substring(match.index + mask.length);
-	var groupSeparator = ',';
-	var groupSize = 3;
+	// Group
+	var groupSeparator = DEFAULT_GROUP_SEPARATOR;
+	var groupSize = DEFAULT_GROUP_SIZE;
 	var groupSizeMultiplier = pow(10, groupSize);
-	var decimalSeparator = '.';
-	var decimalPlaces = 2;
+	// Decimal
+	var decimalSeparator = DEFAULT_DECIMAL_SEPARATOR;
+	var decimalPlaces = DEFAULT_DECIMAL_SIZE;
 	var decimalPlacesMultiplier = pow(10, decimalPlaces);
 	return function format (input) {
 		// Pass value through if not numeric
