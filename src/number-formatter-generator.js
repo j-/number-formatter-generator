@@ -2,6 +2,8 @@ var EXP_MASK = /^.*?([0-9+\-.,' #]+).*?$/;
 
 var abs = Math.abs;
 var pow = Math.pow;
+var round = Math.round;
+var floor = Math.floor;
 
 module.exports = function (input) {
 	// Do not format values if not given a mask
@@ -19,6 +21,8 @@ module.exports = function (input) {
 	var prefix = input.substring(0, match.index);
 	var suffix = input.substring(match.index + mask.length);
 	var groupSeparator = ',';
+	var groupSize = 3;
+	var groupSizeMultiplier = pow(10, groupSize);
 	var decimalSeparator = '.';
 	var decimalPlaces = 2;
 	var decimalPlacesMultiplier = pow(10, decimalPlaces);
@@ -31,9 +35,15 @@ module.exports = function (input) {
 		input = Number(input);
 		var isNegative = input < 0;
 		var value = abs(input);
-		var decimal = Math.floor(value);
-		var fraction = Math.floor(value * decimalPlacesMultiplier) % decimalPlacesMultiplier;
-		var result = decimal + decimalSeparator + fraction;
+		var fraction = round(value * decimalPlacesMultiplier) % decimalPlacesMultiplier;
+		var floored = floor(value);
+		var decimal = floored;
+		var groups = [];
+		while (floored > 0) {
+			groups.unshift(floored % groupSizeMultiplier);
+			floored = floor(floored / groupSizeMultiplier);
+		}
+		var result = groups.join(groupSeparator) + decimalSeparator + fraction;
 		return prefix + (isNegative ? '-' : '') + result + suffix;
 	};
 };
