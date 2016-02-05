@@ -13,6 +13,8 @@ module.exports = function (input) {
 	var prefix = input.substring(0, match.index);
 	var suffix = input.substring(match.index + mask.length);
 	return function format (input) {
-
+		if (isNaN(input)) {
+			return input;
+		}
 	};
 };
