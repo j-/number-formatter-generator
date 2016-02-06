@@ -76,7 +76,6 @@ export default class NumberFormatterGenerator {
 		}
 		// Ensure input is number
 		input = Number(input);
-		var isNegative = input < 0;
 		var value = abs(input);
 		var fraction = round(value * this.decimalPlacesMultiplier) % this.decimalPlacesMultiplier;
 		fraction = NumberFormatterGenerator.pad(fraction, '0', this.decimalPlaces, true);
@@ -88,7 +87,12 @@ export default class NumberFormatterGenerator {
 			floored = floor(floored / this.groupSizeMultiplier);
 		}
 		var result = groups.join(this.groupSeparator) + this.decimalSeparator + fraction;
-		return this.prefix + (isNegative ? '-' : '') + result + this.suffix;
+		var negative = this.formatNegative(input);
+		return this.prefix + negative + result + this.suffix;
+	}
+
+	formatNegative (value) {
+		return value < 0 ? '-' : '';
 	}
 
 }
