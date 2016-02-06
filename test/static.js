@@ -58,6 +58,10 @@ describe('NumberFormatterGenerator', function () {
 	describe('.formatFraction()', function () {
 		const formatFraction = NumberFormatterGenerator.formatFraction;
 
+		it('returns an empty string when given no options', function () {
+			assert.equal(formatFraction(3.14), '');
+		});
+
 		it('returns a string', function () {
 			assert.equal(formatFraction(3.14, { places: 2 }), '14', '2 places');
 		});
