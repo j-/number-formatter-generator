@@ -8,6 +8,20 @@ var abs = Math.abs;
 var pow = Math.pow;
 var round = Math.round;
 var floor = Math.floor;
+var ceil = Math.ceil;
+
+function pad (str, ch, len, left) {
+	str = String(str);
+	ch = String(ch);
+	len = Number(len);
+	if (!str || !ch || len <= 0 || str.length > len) {
+		return str;
+	}
+	var diff = ceil(len - str.length) / ch.length;
+	var padding = (new Array(diff + 1)).join(ch);
+	padding = padding.substring(0, diff); // TODO: test if necessary
+	return left ? (padding + str) : (str + padding);
+}
 
 function findGroupSeparator (mask) {
 	var result = mask.match(/[.,' ]/);
@@ -58,6 +72,7 @@ function generator (input) {
 		var isNegative = input < 0;
 		var value = abs(input);
 		var fraction = round(value * decimalPlacesMultiplier) % decimalPlacesMultiplier;
+		fraction = pad(fraction, '0', decimalPlaces, true);
 		var floored = floor(value);
 		var decimal = floored;
 		var groups = [];
