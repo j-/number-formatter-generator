@@ -51,10 +51,16 @@ export default class Generator {
 		let result = [];
 		for (let i = 0; i < groups; i++) {
 			let power = pow(multiplier, i);
+			// The value of this group
+			// e.g. 456 for the second group of 123,456,789
 			let group = floor(value / power) % multiplier;
+			// This is the last group to iterate over
+			// i.e. it is the largest group
+			let last = (i === groups - 1);
 			result.unshift(
 				Generator.formatGroup(group, {
-					required: (i === groups - 1) ? required : size,
+					// Resolve things like 001,001 or 1,1
+					required: last ? required : size,
 				})
 			);
 		}
