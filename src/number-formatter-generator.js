@@ -44,8 +44,7 @@ export default class NumberFormatterGenerator {
 		return result[0];
 	}
 
-	static formatFraction (value, { places }) {
-		const multiplier = pow(10, places);
+	static formatFraction (value, { places, multiplier = pow(10, places) }) {
 		const fraction = round(abs(value) * multiplier) % multiplier;
 		return NumberFormatterGenerator.pad(fraction, '0', places, true);
 	}
@@ -77,6 +76,7 @@ export default class NumberFormatterGenerator {
 		// Decimal
 		this.decimalPlaces = DEFAULT_DECIMAL_SIZE;
 		this.decimalSeparator = NumberFormatterGenerator.findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
+		this.decimalMultiplier = pow(10, this.decimalPlaces);
 	}
 
 	format (input) {
@@ -103,6 +103,7 @@ export default class NumberFormatterGenerator {
 	formatFraction (value) {
 		return NumberFormatterGenerator.formatFraction(value, {
 			places: this.decimalPlaces,
+			multiplier: this.decimalMultiplier,
 		});
 	}
 
