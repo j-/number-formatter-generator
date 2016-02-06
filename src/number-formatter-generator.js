@@ -49,6 +49,12 @@ export default class NumberFormatterGenerator {
 		return NumberFormatterGenerator.pad(fraction, '0', places, true);
 	}
 
+	static formatGroup (value, { optional = 0, required = 0 } = {}) {
+		let requiredPart = NumberFormatterGenerator.pad(value, '0', required, true);
+		requiredPart = requiredPart.substring(requiredPart.length - required);
+		return requiredPart;
+	}
+
 	static formatNegative (value) {
 		return value < 0 ? '-' : '';
 	}

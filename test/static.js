@@ -107,4 +107,40 @@ describe('NumberFormatterGenerator', function () {
 			assert.equal(formatNegative(-Infinity), '-', '-Infinity');
 		});
 	});
+
+	describe('.formatGroup()', function () {
+		const formatGroup = NumberFormatterGenerator.formatGroup;
+
+		it('returns an empty string when given no options', function () {
+			assert.equal(formatGroup(0), '', '0');
+			assert.equal(formatGroup(100), '', '100');
+			assert.equal(formatGroup(Infinity), '', 'Infinity');
+		});
+
+		it('returns a single character when given a required count of one', function () {
+			assert.equal(formatGroup(0, { required: 1 }), '0', '0');
+			assert.equal(formatGroup(100, { required: 1 }), '0', '100');
+			assert.equal(formatGroup(1, { required: 1 }), '1', '1');
+			assert.equal(formatGroup(99, { required: 1 }), '9', '99');
+			assert.equal(formatGroup(34, { required: 1 }), '4', '34');
+		});
+
+		it('returns two characters when given a required count of two', function () {
+			assert.equal(formatGroup(0, { required: 2 }), '00', '0');
+			assert.equal(formatGroup(100, { required: 2 }), '00', '100');
+			assert.equal(formatGroup(1, { required: 2 }), '01', '1');
+			assert.equal(formatGroup(99, { required: 2 }), '99', '99');
+			assert.equal(formatGroup(34, { required: 2 }), '34', '34');
+			assert.equal(formatGroup(1234, { required: 2 }), '34', '1234');
+		});
+
+		it('returns five characters when given a required count of five', function () {
+			assert.equal(formatGroup(0, { required: 5 }), '00000', '0');
+			assert.equal(formatGroup(100, { required: 5 }), '00100', '100');
+			assert.equal(formatGroup(1, { required: 5 }), '00001', '1');
+			assert.equal(formatGroup(99, { required: 5 }), '00099', '99');
+			assert.equal(formatGroup(34, { required: 5 }), '00034', '34');
+			assert.equal(formatGroup(1234, { required: 5 }), '01234', '1234');
+		});
+	});
 });
