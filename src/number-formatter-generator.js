@@ -13,7 +13,7 @@ const {
 	log,
 } = Math;
 
-export default class NumberFormatterGenerator {
+export default class Generator {
 
 	static pad (str, ch, len = 0, left = false) {
 		str = String(str || '');
@@ -53,7 +53,7 @@ export default class NumberFormatterGenerator {
 			let power = pow(multiplier, i);
 			let group = floor(value / power) % multiplier;
 			result.unshift(
-				NumberFormatterGenerator.formatGroup(group, {
+				Generator.formatGroup(group, {
 					required: (i === groups - 1) ? required : size,
 				})
 			);
@@ -64,11 +64,11 @@ export default class NumberFormatterGenerator {
 	static formatFraction (value, { places = DEFAULT_DECIMAL_SIZE } = {}) {
 		const multiplier = pow(10, places);
 		const fraction = round(abs(value) * multiplier) % multiplier;
-		return NumberFormatterGenerator.pad(fraction, '0', places, true);
+		return Generator.pad(fraction, '0', places, true);
 	}
 
 	static formatGroup (value, { required = 0 } = {}) {
-		let requiredPart = NumberFormatterGenerator.pad(value, '0', required, true);
+		let requiredPart = Generator.pad(value, '0', required, true);
 		requiredPart = requiredPart.substring(requiredPart.length - required);
 		let optionalPart = String(floor(value / pow(10, required)) || '');
 		return optionalPart + requiredPart;
@@ -96,11 +96,11 @@ export default class NumberFormatterGenerator {
 		this.suffix = input.substring(match.index + mask.length);
 		// Group
 		this.groupSize = DEFAULT_GROUP_SIZE;
-		this.groupSeparator = NumberFormatterGenerator.findGroupSeparator(mask) || DEFAULT_GROUP_SEPARATOR;
+		this.groupSeparator = Generator.findGroupSeparator(mask) || DEFAULT_GROUP_SEPARATOR;
 		this.groupSizeMultiplier = pow(10, this.groupSize);
 		// Decimal
 		this.decimalPlaces = DEFAULT_DECIMAL_SIZE;
-		this.decimalSeparator = NumberFormatterGenerator.findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
+		this.decimalSeparator = Generator.findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
 	}
 
 	format (input) {
@@ -135,13 +135,13 @@ export default class NumberFormatterGenerator {
 	}
 
 	formatFraction (value) {
-		return NumberFormatterGenerator.formatFraction(value, {
+		return Generator.formatFraction(value, {
 			places: this.decimalPlaces,
 		});
 	}
 
 	formatNegative (value) {
-		return NumberFormatterGenerator.formatNegative(value);
+		return Generator.formatNegative(value);
 	}
 
 }
