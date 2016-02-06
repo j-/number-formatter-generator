@@ -4,7 +4,7 @@ var assert = require('assert');
 describe('format', function () {
 	function format (mask, input) {
 		var generator = new NumberFormatterGenerator(mask);
-		return generator(input);
+		return generator.format(input);
 	}
 
 	function test (mask, input, expected) {

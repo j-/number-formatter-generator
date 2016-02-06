@@ -46,7 +46,8 @@ export default class NumberFormatterGenerator {
 	constructor (input) {
 		// Do not format values if not given a mask
 		if (!input) {
-			return function format (input) { return input };
+			this.format = function format (input) { return input };
+			return;
 		}
 		// Ensure input is string
 		input = String(input);
@@ -66,7 +67,7 @@ export default class NumberFormatterGenerator {
 		var decimalSeparator = NumberFormatterGenerator.findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
 		var decimalPlaces = DEFAULT_DECIMAL_SIZE;
 		var decimalPlacesMultiplier = pow(10, decimalPlaces);
-		return function format (input) {
+		this.format = function format (input) {
 			// Pass value through if not numeric
 			if (isNaN(input)) {
 				return input;
