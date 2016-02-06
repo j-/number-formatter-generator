@@ -10,6 +10,7 @@ const {
 	round,
 	floor,
 	ceil,
+	log,
 } = Math;
 
 export default class NumberFormatterGenerator {
@@ -42,6 +43,22 @@ export default class NumberFormatterGenerator {
 			return null;
 		}
 		return result[0];
+	}
+
+	static formatInteger (value, { size = DEFAULT_GROUP_SIZE, separator = DEFAULT_GROUP_SEPARATOR, required = 0 } = {}) {
+		const multiplier = pow(10, size);
+		const groups = ceil(log(value + 1) / log(multiplier));
+		let result = [];
+		for (let i = 0; i < groups; i++) {
+			let power = pow(multiplier, i);
+			let group = floor(value / power) % multiplier;
+			result.unshift(
+				NumberFormatterGenerator.formatGroup(group, {
+					required: (i === groups - 1) ? required : size,
+				})
+			);
+		}
+		return result.join(separator);
 	}
 
 	static formatFraction (value, { places = DEFAULT_DECIMAL_SIZE, multiplier = pow(10, places) } = {}) {
