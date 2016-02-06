@@ -4,7 +4,9 @@ const babel = require('rollup-plugin-babel');
 rollup({
 	entry: 'src/number-formatter-generator.js',
 	plugins: [
-		babel(),
+		babel({
+			presets: ['es2015-rollup'],
+		}),
 	],
 }).then(function (bundle) {
 	return bundle.write({
