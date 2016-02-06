@@ -2,12 +2,13 @@
   "name": "number-formatter-generator",
   "version": "0.0.0",
   "description": "Generate a number formatter function",
-  "main": "src/number-formatter-generator.js",
+  "main": "dist/number-formatter-generator.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "node tasks/build"
   },
   "repository": {
     "type": "git",

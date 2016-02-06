@@ -85,4 +85,4 @@ function generator (input) {
 	};
 }
 
-module.exports = generator;
+export default generator;
