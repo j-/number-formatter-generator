@@ -48,23 +48,26 @@ export default class Generator {
 	static formatInteger (value, { size = DEFAULT_GROUP_SIZE, separator = DEFAULT_GROUP_SEPARATOR, required = 0 } = {}) {
 		const multiplier = pow(10, size);
 		const groups = ceil(log(value + 1) / log(multiplier));
-		let result = [];
+		let result = '';
 		for (let i = 0; i < groups; i++) {
 			let power = pow(multiplier, i);
 			// The value of this group
 			// e.g. 456 for the second group of 123,456,789
 			let group = floor(value / power) % multiplier;
-			// This is the last group to iterate over
-			// i.e. it is the largest group
-			let last = (i === groups - 1);
-			result.unshift(
+			// First and last groups for 123,456 are 123 and 456 respectively
+			let last = (i === 0);
+			let first = (i === groups - 1);
+			result = (
 				Generator.formatGroup(group, {
 					// Resolve things like 001,001 or 1,1
-					required: last ? required : size,
-				})
+					required: (first ? required : size),
+				}) +
+				// Only add a separator after all but the last group
+				(last ? '' : separator) +
+				result
 			);
 		}
-		return result.join(separator);
+		return result;
 	}
 
 	static formatFraction (value, { places = DEFAULT_DECIMAL_SIZE } = {}) {
