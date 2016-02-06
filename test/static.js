@@ -152,4 +152,32 @@ describe('NumberFormatterGenerator', function () {
 			assert.equal(formatGroup(123123, { required: 5 }), '123123', '123123');
 		});
 	});
+
+	describe('.formatInteger()', function () {
+		const formatInteger = NumberFormatterGenerator.formatInteger;
+
+		it('returns an empty string when given no options or value', function () {
+			assert.equal(formatInteger(0), '', '0');
+		});
+
+		it('returns the input as a string when given no options', function () {
+			assert.equal(formatInteger(1), '1', '1');
+			assert.equal(formatInteger(100), '100', '100');
+			assert.equal(formatInteger(123), '123', '123');
+		});
+
+		it('formats input with default config when given no options', function () {
+			assert.equal(formatInteger(1000), '1,000', '1000');
+			assert.equal(formatInteger(2000), '2,000', '2000');
+			assert.equal(formatInteger(9999), '9,999', '9999');
+			assert.equal(formatInteger(123456), '123,456', '123456');
+			assert.equal(formatInteger(123456789), '123,456,789', '123456789');
+		});
+
+		it('formats input with given options', function () {
+			assert.equal(formatInteger(1000, { size: 2 }), '10,00', 'size 2');
+			assert.equal(formatInteger(123456789, { size: 2 }), '1,23,45,67,89', 'size 2');
+			assert.equal(formatInteger(12345, { required: 3 }), '012,345', 'required 3');
+		});
+	});
 });
