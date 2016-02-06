@@ -44,7 +44,7 @@ export default class NumberFormatterGenerator {
 		return result[0];
 	}
 
-	static formatFraction (value, { places, multiplier = pow(10, places) } = {}) {
+	static formatFraction (value, { places = 0, multiplier = pow(10, places) } = {}) {
 		const fraction = round(abs(value) * multiplier) % multiplier;
 		return NumberFormatterGenerator.pad(fraction, '0', places, true);
 	}
