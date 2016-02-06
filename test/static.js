@@ -54,4 +54,23 @@ describe('NumberFormatterGenerator', function () {
 			assert.equal(pad('xyz', 'Hello world', 15, true), 'Hello worldHxyz', 'Hello world, 15');
 		});
 	});
+
+	describe('.formatFraction()', function () {
+		const formatFraction = NumberFormatterGenerator.formatFraction;
+
+		it('returns a string', function () {
+			assert.equal(formatFraction(3.14, { places: 2 }), '14', '2 places');
+		});
+
+		it('truncates', function () {
+			assert.equal(formatFraction(3.14, { places: 0 }), '', '0 places');
+			assert.equal(formatFraction(3.14, { places: 1 }), '1', '1 place');
+		});
+
+		it('pads', function () {
+			assert.equal(formatFraction(3.14, { places: 3 }), '140', '3 places');
+			assert.equal(formatFraction(3.14, { places: 4 }), '1400', '4 places');
+			assert.equal(formatFraction(3.14, { places: 5 }), '14000', '5 places');
+		});
+	});
 });
