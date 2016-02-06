@@ -21,7 +21,7 @@ export default class NumberFormatterGenerator {
 		if (!str || !ch || len <= 0 || str.length > len) {
 			return str;
 		}
-		var diff = ceil(len - str.length) / ch.length;
+		var diff = ceil((len - str.length) / ch.length);
 		var padding = (new Array(diff + 1)).join(ch);
 		padding = padding.substring(0, diff); // TODO: test if necessary
 		return left ? (padding + str) : (str + padding);
