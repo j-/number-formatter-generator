@@ -49,10 +49,11 @@ export default class NumberFormatterGenerator {
 		return NumberFormatterGenerator.pad(fraction, '0', places, true);
 	}
 
-	static formatGroup (value, { optional = 0, required = 0 } = {}) {
+	static formatGroup (value, { required = 0 } = {}) {
 		let requiredPart = NumberFormatterGenerator.pad(value, '0', required, true);
 		requiredPart = requiredPart.substring(requiredPart.length - required);
-		return requiredPart;
+		let optionalPart = String(floor(value / pow(10, required)) || '');
+		return optionalPart + requiredPart;
 	}
 
 	static formatNegative (value) {

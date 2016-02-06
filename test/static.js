@@ -111,36 +111,45 @@ describe('NumberFormatterGenerator', function () {
 	describe('.formatGroup()', function () {
 		const formatGroup = NumberFormatterGenerator.formatGroup;
 
-		it('returns an empty string when given no options', function () {
+		it('returns an empty string when given no options or value', function () {
 			assert.equal(formatGroup(0), '', '0');
-			assert.equal(formatGroup(100), '', '100');
-			assert.equal(formatGroup(Infinity), '', 'Infinity');
 		});
 
-		it('returns a single character when given a required count of one', function () {
+		it('returns the input as a string when given no options', function () {
+			assert.equal(formatGroup(1), '1', '1');
+			assert.equal(formatGroup(100), '100', '100');
+			assert.equal(formatGroup(123), '123', '123');
+			assert.equal(formatGroup(123123123), '123123123', '123123123');
+		});
+
+		it('returns at least one character when given a required count of one', function () {
 			assert.equal(formatGroup(0, { required: 1 }), '0', '0');
-			assert.equal(formatGroup(100, { required: 1 }), '0', '100');
 			assert.equal(formatGroup(1, { required: 1 }), '1', '1');
-			assert.equal(formatGroup(99, { required: 1 }), '9', '99');
-			assert.equal(formatGroup(34, { required: 1 }), '4', '34');
+			assert.equal(formatGroup(34, { required: 1 }), '34', '34');
+			assert.equal(formatGroup(99, { required: 1 }), '99', '99');
+			assert.equal(formatGroup(100, { required: 1 }), '100', '100');
+			assert.equal(formatGroup(1234, { required: 1 }), '1234', '1234');
+			assert.equal(formatGroup(123123, { required: 1 }), '123123', '123123');
 		});
 
-		it('returns two characters when given a required count of two', function () {
+		it('returns at least two characters when given a required count of two', function () {
 			assert.equal(formatGroup(0, { required: 2 }), '00', '0');
-			assert.equal(formatGroup(100, { required: 2 }), '00', '100');
 			assert.equal(formatGroup(1, { required: 2 }), '01', '1');
-			assert.equal(formatGroup(99, { required: 2 }), '99', '99');
 			assert.equal(formatGroup(34, { required: 2 }), '34', '34');
-			assert.equal(formatGroup(1234, { required: 2 }), '34', '1234');
+			assert.equal(formatGroup(99, { required: 2 }), '99', '99');
+			assert.equal(formatGroup(100, { required: 2 }), '100', '100');
+			assert.equal(formatGroup(1234, { required: 2 }), '1234', '1234');
+			assert.equal(formatGroup(123123, { required: 2 }), '123123', '123123');
 		});
 
-		it('returns five characters when given a required count of five', function () {
+		it('returns at least five characters when given a required count of five', function () {
 			assert.equal(formatGroup(0, { required: 5 }), '00000', '0');
-			assert.equal(formatGroup(100, { required: 5 }), '00100', '100');
 			assert.equal(formatGroup(1, { required: 5 }), '00001', '1');
-			assert.equal(formatGroup(99, { required: 5 }), '00099', '99');
 			assert.equal(formatGroup(34, { required: 5 }), '00034', '34');
+			assert.equal(formatGroup(99, { required: 5 }), '00099', '99');
+			assert.equal(formatGroup(100, { required: 5 }), '00100', '100');
 			assert.equal(formatGroup(1234, { required: 5 }), '01234', '1234');
+			assert.equal(formatGroup(123123, { required: 5 }), '123123', '123123');
 		});
 	});
 });
