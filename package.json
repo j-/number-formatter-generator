@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
+    "pretest": "npm run build",
     "test": "mocha",
+    "prebuild": "npm install",
     "build": "node tasks/build"
   },
   "repository": {
