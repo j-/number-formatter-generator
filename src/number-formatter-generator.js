@@ -14,7 +14,7 @@ const {
 
 export default class NumberFormatterGenerator {
 
-	static pad (str, ch, len, left) {
+	static pad (str = '', ch = '', len = 0, left = false) {
 		str = String(str);
 		ch = String(ch);
 		len = Number(len);
