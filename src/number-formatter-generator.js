@@ -93,6 +93,16 @@ export default class NumberFormatterGenerator {
 		}
 		// Ensure input is number
 		input = Number(input);
+		// No need to format these values
+		if (isNaN(input)) {
+			return 'NaN';
+		}
+		else if (input >= Infinity) {
+			return 'Infinity';
+		}
+		else if (input <= -Infinity) {
+			return '-Infinity';
+		}
 		var value = abs(input);
 		var fraction = this.formatFraction(input);
 		var floored = floor(value);
