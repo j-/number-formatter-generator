@@ -53,6 +53,10 @@ describe('NumberFormatterGenerator', function () {
 			assert.equal(pad('Hello world', 'xyz', 100, true).length, 100, 'xyz, 100');
 			assert.equal(pad('xyz', 'Hello world', 15, true), 'Hello worldHxyz', 'Hello world, 15');
 		});
+
+		it('can have a zero-length input', function () {
+			assert.equal(pad('', 'xyz', 12), 'xyzxyzxyzxyz', '12');
+		});
 	});
 
 	describe('.formatFraction()', function () {

@@ -18,7 +18,7 @@ export default class NumberFormatterGenerator {
 		str = String(str || '');
 		ch = String(ch || '');
 		len = Number(len);
-		if (!str || !ch || len <= 0 || str.length > len) {
+		if (!ch || len <= 0 || str.length > len) {
 			return str;
 		}
 		var diff = len - str.length;
