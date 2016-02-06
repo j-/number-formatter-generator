@@ -3,7 +3,6 @@ const babel = require('rollup-plugin-babel');
 
 rollup({
 	entry: 'src/number-formatter-generator.js',
-	moduleName: 'numberFormatterGenerator',
 	plugins: [
 		babel(),
 	],
