@@ -177,7 +177,11 @@ describe('NumberFormatterGenerator', function () {
 		it('formats input with given options', function () {
 			assert.equal(formatInteger(1000, { size: 2 }), '10,00', 'size 2');
 			assert.equal(formatInteger(123456789, { size: 2 }), '1,23,45,67,89', 'size 2');
+			assert.equal(formatInteger(1234, { required: 3 }), '001,234', 'required 3');
 			assert.equal(formatInteger(12345, { required: 3 }), '012,345', 'required 3');
+			assert.equal(formatInteger(123456, { required: 3 }), '123,456', 'required 3');
+			assert.equal(formatInteger(12345, { separator: '.' }), '12.345', 'separator .');
+			assert.equal(formatInteger(12345, { separator: ' ' }), '12 345', 'separator space');
 		});
 	});
 });
