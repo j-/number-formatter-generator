@@ -50,43 +50,43 @@ export default class NumberFormatterGenerator {
 			return;
 		}
 		// Ensure input is string
-		input = String(input);
+		this.input = String(input);
 		// Extract actual mask from input
 		var match = input.match(EXP_MASK);
 		if (!match) {
 			throw new Error('Invalid mask');
 		}
 		var mask = match[1];
-		var prefix = input.substring(0, match.index);
-		var suffix = input.substring(match.index + mask.length);
+		this.prefix = input.substring(0, match.index);
+		this.suffix = input.substring(match.index + mask.length);
 		// Group
-		var groupSeparator = NumberFormatterGenerator.findGroupSeparator(mask) || DEFAULT_GROUP_SEPARATOR;
-		var groupSize = DEFAULT_GROUP_SIZE;
-		var groupSizeMultiplier = pow(10, groupSize);
+		this.groupSize = DEFAULT_GROUP_SIZE;
+		this.groupSeparator = NumberFormatterGenerator.findGroupSeparator(mask) || DEFAULT_GROUP_SEPARATOR;
+		this.groupSizeMultiplier = pow(10, this.groupSize);
 		// Decimal
-		var decimalSeparator = NumberFormatterGenerator.findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
-		var decimalPlaces = DEFAULT_DECIMAL_SIZE;
-		var decimalPlacesMultiplier = pow(10, decimalPlaces);
+		this.decimalPlaces = DEFAULT_DECIMAL_SIZE;
+		this.decimalSeparator = NumberFormatterGenerator.findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
+		this.decimalPlacesMultiplier = pow(10, this.decimalPlaces);
 		this.format = function format (input) {
 			// Pass value through if not numeric
 			if (isNaN(input)) {
-				return input;
+				return this.input;
 			}
 			// Ensure input is number
 			input = Number(input);
 			var isNegative = input < 0;
 			var value = abs(input);
-			var fraction = round(value * decimalPlacesMultiplier) % decimalPlacesMultiplier;
-			fraction = NumberFormatterGenerator.pad(fraction, '0', decimalPlaces, true);
+			var fraction = round(value * this.decimalPlacesMultiplier) % this.decimalPlacesMultiplier;
+			fraction = NumberFormatterGenerator.pad(fraction, '0', this.decimalPlaces, true);
 			var floored = floor(value);
 			var decimal = floored;
 			var groups = [];
 			while (floored > 0) {
-				groups.unshift(floored % groupSizeMultiplier);
-				floored = floor(floored / groupSizeMultiplier);
+				groups.unshift(floored % this.groupSizeMultiplier);
+				floored = floor(floored / this.groupSizeMultiplier);
 			}
-			var result = groups.join(groupSeparator) + decimalSeparator + fraction;
-			return prefix + (isNegative ? '-' : '') + result + suffix;
+			var result = groups.join(this.groupSeparator) + this.decimalSeparator + fraction;
+			return this.prefix + (isNegative ? '-' : '') + result + this.suffix;
 		}
 	}
 
