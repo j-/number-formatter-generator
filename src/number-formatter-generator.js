@@ -50,6 +50,10 @@ export default class NumberFormatterGenerator {
 		return NumberFormatterGenerator.pad(fraction, '0', places, true);
 	}
 
+	static formatNegative (value) {
+		return value < 0 ? '-' : '';
+	}
+
 	constructor (input) {
 		// Do not format values if not given a mask
 		if (!input) {
@@ -103,7 +107,7 @@ export default class NumberFormatterGenerator {
 	}
 
 	formatNegative (value) {
-		return value < 0 ? '-' : '';
+		return NumberFormatterGenerator.formatNegative(value);
 	}
 
 }
