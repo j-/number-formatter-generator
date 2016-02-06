@@ -1,7 +1,7 @@
 var NumberFormatterGenerator = require('../');
 var assert = require('assert');
 
-describe('format', function () {
+describe.skip('format', function () {
 	function format (mask, input) {
 		var generator = new NumberFormatterGenerator(mask);
 		return generator.format(input);
