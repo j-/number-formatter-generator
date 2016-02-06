@@ -46,7 +46,7 @@ export default class NumberFormatterGenerator {
 	constructor (input) {
 		// Do not format values if not given a mask
 		if (!input) {
-			this.format = function format (input) { return input };
+			this.passthrough = true;
 			return;
 		}
 		// Ensure input is string
@@ -67,27 +67,28 @@ export default class NumberFormatterGenerator {
 		this.decimalPlaces = DEFAULT_DECIMAL_SIZE;
 		this.decimalSeparator = NumberFormatterGenerator.findDecimalSeparator(mask) || DEFAULT_DECIMAL_SEPARATOR;
 		this.decimalPlacesMultiplier = pow(10, this.decimalPlaces);
-		this.format = function format (input) {
-			// Pass value through if not numeric
-			if (isNaN(input)) {
-				return this.input;
-			}
-			// Ensure input is number
-			input = Number(input);
-			var isNegative = input < 0;
-			var value = abs(input);
-			var fraction = round(value * this.decimalPlacesMultiplier) % this.decimalPlacesMultiplier;
-			fraction = NumberFormatterGenerator.pad(fraction, '0', this.decimalPlaces, true);
-			var floored = floor(value);
-			var decimal = floored;
-			var groups = [];
-			while (floored > 0) {
-				groups.unshift(floored % this.groupSizeMultiplier);
-				floored = floor(floored / this.groupSizeMultiplier);
-			}
-			var result = groups.join(this.groupSeparator) + this.decimalSeparator + fraction;
-			return this.prefix + (isNegative ? '-' : '') + result + this.suffix;
+	}
+
+	format (input) {
+		// Pass value through if not numeric
+		if (this.passthrough || isNaN(input)) {
+			return input;
 		}
+		// Ensure input is number
+		input = Number(input);
+		var isNegative = input < 0;
+		var value = abs(input);
+		var fraction = round(value * this.decimalPlacesMultiplier) % this.decimalPlacesMultiplier;
+		fraction = NumberFormatterGenerator.pad(fraction, '0', this.decimalPlaces, true);
+		var floored = floor(value);
+		var decimal = floored;
+		var groups = [];
+		while (floored > 0) {
+			groups.unshift(floored % this.groupSizeMultiplier);
+			floored = floor(floored / this.groupSizeMultiplier);
+		}
+		var result = groups.join(this.groupSeparator) + this.decimalSeparator + fraction;
+		return this.prefix + (isNegative ? '-' : '') + result + this.suffix;
 	}
 
 }
