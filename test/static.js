@@ -73,4 +73,30 @@ describe('NumberFormatterGenerator', function () {
 			assert.equal(formatFraction(3.14, { places: 5 }), '14000', '5 places');
 		});
 	});
+
+	describe('.formatNegative()', function () {
+		const formatNegative = NumberFormatterGenerator.formatNegative;
+
+		it('returns an empty string when positive', function () {
+			assert.equal(formatNegative(100), '', '100');
+			assert.equal(formatNegative(3.14), '', '3.14');
+			assert.equal(formatNegative(0.14), '', '0.14');
+			assert.equal(formatNegative(Infinity), '', 'Infinity');
+		});
+
+		it('returns an empty string when zero', function () {
+			assert.equal(formatNegative(0), '', '0');
+		});
+
+		it('returns an empty string when not a number', function () {
+			assert.equal(formatNegative(NaN), '', 'NaN');
+		});
+
+		it('returns a negative sign when negative', function () {
+			assert.equal(formatNegative(-1), '-', '-1');
+			assert.equal(formatNegative(-100), '-', '-100');
+			assert.equal(formatNegative(-0.12), '-', '-0.12');
+			assert.equal(formatNegative(-Infinity), '-', '-Infinity');
+		});
+	});
 });
