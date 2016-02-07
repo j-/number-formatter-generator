@@ -118,6 +118,39 @@ export default class Generator {
 		]);
 	}
 
+	static parseDecimalSeparator (input, { start = 0, end = input.length } = {}) {
+		let decimalSeparator = null;
+		let decimalSeparatorIndex = null;
+		for (let i = end - 1; i >= start; i++) {
+			let ch = input.charAt(i);
+			if (Generator.charIsSeparator(ch)) {
+				decimalSeparator = ch;
+				decimalSeparatorIndex = i;
+				break;
+			}
+		}
+		return {
+			decimalSeparator,
+			decimalSeparatorIndex,
+		};
+	}
+
+	static parseGroupSeparator (input, { start = 0, end = input.length } = {}) {
+		let groupSeparator = null;
+		let groupSeparatorIndex = null;
+		for (let i = start; i < end; i++) {
+			let ch = input.charAt(i);
+			if (Generator.charIsSeparator(ch)) {
+				groupSeparator = ch;
+				groupSeparatorIndex = i;
+				break;
+			}
+		}
+		return {
+			groupSeparator,
+		};
+	}
+
 	static parsePrefix (input) {
 		const length = input.length;
 		const startPrefix = 0;
