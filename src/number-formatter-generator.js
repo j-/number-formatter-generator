@@ -121,7 +121,7 @@ export default class Generator {
 	static parseDecimalSeparator (input, { start = 0, end = input.length } = {}) {
 		let decimalSeparator = null;
 		let decimalSeparatorIndex = null;
-		for (let i = end - 1; i >= start; i++) {
+		for (let i = end - 1; i >= start; i--) {
 			let ch = input.charAt(i);
 			if (Generator.charIsSeparator(ch)) {
 				decimalSeparator = ch;
