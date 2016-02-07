@@ -3,6 +3,8 @@ const DEFAULT_DECIMAL_SEPARATOR = '.';
 const DEFAULT_GROUP_SIZE = 3;
 const DEFAULT_DECIMAL_SIZE = 0;
 const EXP_MASK = /^.*?([0-9+\-.,' #]+).*?$/;
+const PAD_LEFT = true;
+const PAD_RIGHT = false;
 
 const {
 	abs,
@@ -69,11 +71,11 @@ export default class Generator {
 	static formatFraction (value, { places = DEFAULT_DECIMAL_SIZE } = {}) {
 		const multiplier = pow(10, places);
 		const fraction = round(abs(value) * multiplier) % multiplier;
-		return Generator.pad(fraction, '0', places, true);
+		return Generator.pad(fraction, '0', places, PAD_LEFT);
 	}
 
 	static formatGroup (value, { required = 0 } = {}) {
-		let requiredPart = Generator.pad(value, '0', required, true);
+		let requiredPart = Generator.pad(value, '0', required, PAD_LEFT);
 		requiredPart = requiredPart.substring(requiredPart.length - required);
 		let optionalPart = String(floor(value / pow(10, required)) || '');
 		return optionalPart + requiredPart;
