@@ -184,4 +184,52 @@ describe('NumberFormatterGenerator', function () {
 			assert.equal(formatInteger(12345, { separator: ' ' }), '12 345', 'separator space');
 		});
 	});
+
+	describe('.parsePrefix()', function () {
+		const parsePrefix = NumberFormatterGenerator.parsePrefix;
+
+		it('returns an empty string prefix when given no input', function () {
+			assert.equal(parsePrefix('').prefix, '', 'empty string');
+		});
+
+		it('returns an empty string prefix when given only a mask', function () {
+			assert.equal(parsePrefix('###').prefix, '', '###');
+			assert.equal(parsePrefix('0').prefix, '', '0');
+			assert.equal(parsePrefix('000').prefix, '', '000');
+			assert.equal(parsePrefix('123').prefix, '', '123');
+			assert.equal(parsePrefix('123,456').prefix, '', '123,456');
+			assert.equal(parsePrefix('123,456.78').prefix, '', '123,456.78');
+		});
+
+		it('returns a valid prefix', function () {
+			assert.equal(parsePrefix('abc###').prefix, 'abc', 'abc###');
+			assert.equal(parsePrefix('Value: ###').prefix, 'Value: ', 'Value: ###');
+			assert.equal(parsePrefix('test_###').prefix, 'test_', 'test_###');
+			assert.equal(parsePrefix('US$12,345.00').prefix, 'US$', 'US$12,345.00');
+		});
+	});
+
+	describe('.parseSuffix()', function () {
+		const parseSuffix = NumberFormatterGenerator.parseSuffix;
+
+		it('returns an empty string suffix when given no input', function () {
+			assert.equal(parseSuffix('').suffix, '', 'empty string');
+		});
+
+		it('returns an empty string suffix when given only a mask', function () {
+			assert.equal(parseSuffix('###').suffix, '', '###');
+			assert.equal(parseSuffix('0').suffix, '', '0');
+			assert.equal(parseSuffix('000').suffix, '', '000');
+			assert.equal(parseSuffix('123').suffix, '', '123');
+			assert.equal(parseSuffix('123,456').suffix, '', '123,456');
+			assert.equal(parseSuffix('123,456.78').suffix, '', '123,456.78');
+		});
+
+		it('returns a valid suffix', function () {
+			assert.equal(parseSuffix('###abc').suffix, 'abc', '###abc');
+			assert.equal(parseSuffix('### (Value)').suffix, ' (Value)', '### (Value)');
+			assert.equal(parseSuffix('###_test').suffix, '_test', '###_test');
+			assert.equal(parseSuffix('12,345.00USD').suffix, 'USD', '12,345.00USD');
+		});
+	});
 });
