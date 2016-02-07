@@ -27,6 +27,18 @@ export default class Generator {
 		return false;
 	}
 
+	static charIsSeparator (ch) {
+		switch (ch) {
+			case '.':
+			case ',':
+			case '\'':
+			case ' ':
+				return true;
+			default:
+				return false;
+		}
+	}
+
 	static findGroupSeparator (mask) {
 		var result = mask.match(/[.,' ]/);
 		if (!result) {
