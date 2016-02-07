@@ -15,20 +15,6 @@ const {
 
 export default class Generator {
 
-	static pad (str, ch, len = 0, left = false) {
-		str = String(str || '');
-		ch = String(ch || '');
-		len = Number(len);
-		if (!ch || len <= 0 || str.length > len) {
-			return str;
-		}
-		var diff = len - str.length;
-		var iters = ceil(diff / ch.length);
-		var padding = (new Array(iters + 1)).join(ch);
-		padding = padding.substring(0, diff);
-		return left ? (padding + str) : (str + padding);
-	}
-
 	static charIsMask (ch) {
 		if (ch >= '0' && ch <= '9') {
 			return true;
@@ -95,6 +81,20 @@ export default class Generator {
 
 	static formatNegative (value) {
 		return value < 0 ? '-' : '';
+	}
+
+	static pad (str, ch, len = 0, left = false) {
+		str = String(str || '');
+		ch = String(ch || '');
+		len = Number(len);
+		if (!ch || len <= 0 || str.length > len) {
+			return str;
+		}
+		var diff = len - str.length;
+		var iters = ceil(diff / ch.length);
+		var padding = (new Array(iters + 1)).join(ch);
+		padding = padding.substring(0, diff);
+		return left ? (padding + str) : (str + padding);
 	}
 
 	static parse (input) {
