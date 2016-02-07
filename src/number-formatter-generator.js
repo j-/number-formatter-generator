@@ -97,6 +97,49 @@ export default class Generator {
 		return value < 0 ? '-' : '';
 	}
 
+	static parse (input) {
+		return Object.assign({}, ...[
+			Generator.parsePrefix(input),
+			Generator.parseSuffix(input),
+		]);
+	}
+
+	static parsePrefix (input) {
+		const length = input.length;
+		const startPrefix = 0;
+		let endPrefix = 0;
+		for (let i = 0; i < length; i++) {
+			let ch = input.charAt(i);
+			if (Generator.charIsMask(ch)) {
+				endPrefix = i;
+				break;
+			}
+		}
+		return {
+			startPrefix,
+			endPrefix,
+			prefix: input.substring(startPrefix, endPrefix),
+		};
+	}
+
+	static parseSuffix (input) {
+		const length = input.length;
+		const endSuffix = length;
+		let startSuffix = 0;
+		for (let i = length - 1; i >= 0; i--) {
+			let ch = input.charAt(i);
+			if (Generator.charIsMask(ch)) {
+				startSuffix = i + 1;
+				break;
+			}
+		}
+		return {
+			startSuffix,
+			endSuffix,
+			suffix: input.substring(startSuffix, endSuffix),
+		};
+	}
+
 	constructor (input) {
 		// Do not format values if not given a mask
 		if (!input) {
