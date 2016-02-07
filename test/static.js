@@ -232,4 +232,50 @@ describe('NumberFormatterGenerator', function () {
 			assert.equal(parseSuffix('12,345.00USD').suffix, 'USD', '12,345.00USD');
 		});
 	});
+
+	describe('.parseGroupSeparator()', function () {
+		const parseGroupSeparator = NumberFormatterGenerator.parseGroupSeparator;
+
+		it('returns null when given no input', function () {
+			assert.equal(parseGroupSeparator('').groupSeparator, null, 'empty string');
+		});
+
+		it('returns null when given only a mask', function () {
+			assert.equal(parseGroupSeparator('###').groupSeparator, null, '###');
+			assert.equal(parseGroupSeparator('0').groupSeparator, null, '0');
+			assert.equal(parseGroupSeparator('000').groupSeparator, null, '000');
+			assert.equal(parseGroupSeparator('123').groupSeparator, null, '123');
+		});
+
+		it('returns a valid separator', function () {
+			assert.equal(parseGroupSeparator('123,456').groupSeparator, ',', '123,456');
+			assert.equal(parseGroupSeparator('123,456.78').groupSeparator, ',', '123,456.78');
+			assert.equal(parseGroupSeparator('123 456.78').groupSeparator, ' ', '123 456.78');
+			assert.equal(parseGroupSeparator('123.456,78').groupSeparator, '.', '123.456,78');
+			assert.equal(parseGroupSeparator('123\'456.78').groupSeparator, '\'', '123\'456.78');
+		});
+	});
+
+	describe('.parseDecimalSeparator()', function () {
+		const parseDecimalSeparator = NumberFormatterGenerator.parseDecimalSeparator;
+
+		it('returns null when given no input', function () {
+			assert.equal(parseDecimalSeparator('').decimalSeparator, null, 'empty string');
+		});
+
+		it('returns null when given only a mask', function () {
+			assert.equal(parseDecimalSeparator('###').decimalSeparator, null, '###');
+			assert.equal(parseDecimalSeparator('0').decimalSeparator, null, '0');
+			assert.equal(parseDecimalSeparator('000').decimalSeparator, null, '000');
+			assert.equal(parseDecimalSeparator('123').decimalSeparator, null, '123');
+		});
+
+		it('returns a valid separator', function () {
+			assert.equal(parseDecimalSeparator('123,456').decimalSeparator, ',', '123,456');
+			assert.equal(parseDecimalSeparator('123,456.78').decimalSeparator, '.', '123,456.78');
+			assert.equal(parseDecimalSeparator('123 456.78').decimalSeparator, '.', '123 456.78');
+			assert.equal(parseDecimalSeparator('123.456,78').decimalSeparator, ',', '123.456,78');
+			assert.equal(parseDecimalSeparator('123,456\'78').decimalSeparator, '\'', '123,456\'78');
+		});
+	});
 });
