@@ -29,6 +29,16 @@ export default class Generator {
 		return left ? (padding + str) : (str + padding);
 	}
 
+	static charIsMask (ch) {
+		if (ch >= '0' && ch <= '9') {
+			return true;
+		}
+		if (ch === '#') {
+			return true;
+		}
+		return false;
+	}
+
 	static findGroupSeparator (mask) {
 		var result = mask.match(/[.,' ]/);
 		if (!result) {
